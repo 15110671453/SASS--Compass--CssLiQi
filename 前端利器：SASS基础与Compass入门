@@ -1,0 +1,274 @@
+前端利器：SASS基础与Compass入门
+时间 2014-06-18 08:42:55  SegmentFault
+原文  http://blog.segmentfault.com/muse/1190000000579431
+主题 Sass Compass
+SASS是Syntactically Awesome Stylesheete
+
+Sass的缩写，它是css的一个开发工具，提供了很多便利和简单的语法，让css看起来更像是一门语言，这种特性也被称为“css预编译”。它的主要设计思想是让我们可以按照编程的思路编写自己的样式，然后通过“编译器”生成我们所需要的css文件。
+
+当然，SASS只是css预编译工具中的一种，类似的工具还有Less、stylus等，SASS起初语法采用缩进排列形式，但对于设计师来说既不直观还容易出现错误。在吸取了Less的一些特性基础上，SASS3.0有了大幅改进，也就是现在的SCSS。
+
+为什么使用SASS/SCSS
+
+易维护，更方便的定制 
+对于一个大型或者稍微有规模的UI来说，如果需要替换下整体风格，或者是某个字体的像素值，比如我们经常会遇到panel，window以及portal共用一个背景色，这个时候按照常规的方式，我们需要一个个定位到元素使用的class，然后逐个替换，SASS提供了变量的方式，你可以把某个样式作为一个变量，然后各个class引用这个变量即可，修改时，我们只需修改对应的变量。 
+对于编程人员的友好
+对于一个没有前端基础的编程人员，写css样式是一件非常痛苦的事情，他们会感觉到各种约束，为什么我不能定一个变量来避免那些类似“变量”的重复书写？为什么我不能继承上个class的样式定义？。。。SASS/SCSS正是帮编程人员解开了这些疑惑，让css看起来更像是一门编程语言。
+效率的提升 
+对于一个前端开发人员来说，我不熟悉编程，也不关注css是否具有的一些编程语言特性，但这不是你放弃他的理由，css3的发展，加之主流浏览器的兼容性不一，很多浏览器都有自己的兼容hack，很多时候我们需要针对不同的浏览器写一堆的hack，这种浪费时间的重复劳动就交给SASS处理去吧！
+安装与使用
+
+SASS最早来源于Haml项目，但这个工程饱受诟病，很多人认为它使html失去语义化的特性，因此，并没有广泛的得到推广，而源自于它的SASS受到一致的认可，SASS基于Ruby编写，也是Ruby On Rails的主力插件。尽管如此，你无需担心自己没有Ruby基础，你需要的只是一个Ruby环境（现在已经有人把SASS移植到python编译环境下了）。
+
+Ruby的下载地址： https://www.ruby-lang.org/zhX 31Xcn/ window下可以直接下载安装包
+安装SASS，安装完ruby之后，你就可以直接在命令行执行下面的命令（注册为环境变量）： 
+>gem install sass
+注：由于国内网络原因，可能会导致gem安装插件时失败，此时可以将gem源切换为淘宝的ruby镜像站 http://ruby.taobao.org/
+
+3. 使用
+
+SASS文件的后缀为.scss，可以使用下面的命令将scss文件编译为最终使用的css文件：
+
+sass demo.scss
+或者指定css文件名
+
+sass demo.scss product.css
+基本语法
+
+1. 变量
+
+SASS支持变量的定义，你可以使用$来定义一个变量，这样我们就可以把一些公用的样式定义为一个变量，在使用时直接引用即可：
+
+$white:#fff;
+$font12:12px;
+.menu{
+    color: $white;
+    font-size: $font12;
+}
+编译后：
+
+.menu {
+  color: white;
+  font-size: 12px;
+}
+
+2 .嵌套
+
+SASS支持两种嵌套方式：选择器嵌套和属性嵌套。嵌套极大程度上降低了选择器名称和属性的重复书写。
+
+选择器嵌套 
+选择器嵌套是指从一个选择器中嵌套子选择器，来实现选择器的继承关系。
+	.header{
+	   .logo{
+		   display: block;
+		   border: none;
+	   }
+	   ul li{
+		   line-break: normal;
+	   }
+	}
+编译后：
+
+.header .logo {
+  display: block;
+  border: none;
+}
+.header ul li {
+  line-break: normal;
+}
+两者对比不难发现，省去了很大一部分的选择器的层级声明。
+
+可以通过&来表示父元素选择器，比如我们声明一个a标签的样式：
+
+    a{
+        text-decoration: none;
+        &:hover{
+            color: #007998;
+        }
+    }
+编译后：
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: #007998;
+}
+属性嵌套 
+属性嵌套，是指将带有相同前缀单词的属性提出来，作为一个公有的属性，嵌套进其他属性，就像很多姓氏一样的人，把这些人姓氏只记一次，后面跟上不同的名字。
+    h3{
+        font:{
+            size:26px;
+            weight:normal;
+            family:arial
+        }
+    }
+编译后：
+
+h3 {
+  font-size: 26px;
+  font-weight: normal;
+  font-family: arial;
+}
+当然实际情况font定义可能更简洁些，这里只是做一个示例。
+
+3. 函数
+
+SASS中，你可以对属性值进行简单的运算， 比如：
+
+$white:#fff;
+$font12:12px;    
+.newsize{
+        font-size: $font12 + 2;
+        color:$white - #007998;
+    }
+编译后生成：
+
+.newsize {
+  font-size: 14px;
+  color: #ff8667;
+}
+当然除了最基本的加减乘除运算函数，SASS还提供了很多其他有趣的函数，像我们最常用的颜色函数lighten（减淡）和darken（加深）。
+
+.lgt{
+    color: lighten($black,10%);
+    background-color: darken($white,50%);
+}
+编译后可以得到一个运算好的颜色值：
+
+.lgt {
+  color: #1a1a1a;
+  background-color: gray;
+}
+更多的函数信息，请查看 SASS官方函数大全
+
+4. 混合
+
+SASS的混合是一个非常值得你去尝试的特性，如果你对这个概念不太清楚，那么你可以认为他就是一个模板的宏定义，而且这个宏还能接收参数。
+
+@mixin box-shadow{
+	-webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow:inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+	box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.funny-box{
+	@include box-shadow;
+}
+编译后：
+
+.funny-box {
+  -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+}
+带参数的mixin：
+
+@mixin border-radius($circle:50px){
+	-webkit-border-radius: $circle;
+	-moz-border-radius: $circle;
+	border-radius: $circle;
+}
+.circle{
+	@include border-radius(10px);
+}
+$circle:50px 为默认参数，可以通过传递参数来覆盖默认参数，编译后效果如下：
+
+.circle {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+除此之外，minxin还支持多个参数，也支持类似于java中的String...类型的多个值的传递。
+
+5. 继承
+
+既然SASS看起来像一门语言了，那么其他语言的一些基本特性，也应该是其所具备的，SASS不孚众望，具备了一个简单的继承特性，使用这个特性需要关键字 @extend 。
+
+.pclass{
+  border: 4px solid #ff9aa9;
+}
+.subclass{
+  @extend .pclass;
+  border-width: 2px;
+}
+编译后：
+
+.pclass, .subclass {
+  border: 4px solid #ff9aa9;
+}
+
+.subclass {
+  border-width: 2px;
+}
+使用compass
+
+介绍完SASS的一些基本入门知识点后，你是否有想尝试下的冲动呢？工欲善其事，必先利其器；这里简单介绍下一个开发中经常使用的SASS工具compass，compass是SASS团队成员开发的，compass是对SASS的一个封装，目的是为开发者提供一些丰富的mixin组件以及一些实用的工具模块。compass也已经成为ruby on rails的一个标配组件。
+
+安装
+
+安装依然使用ruby gem安装方式，参照前面安装sass过程，gem命令如下：
+
+gem install compass
+现在安装compass时，一般都附带安装上了sass组件，也就是说你可以跳过前面安装sass的流程了。
+
+getting start
+
+工程的创建
+
+compass create yourpj;
+此时会在目录下生成三个文件：
+
+请输入图片描述
+config.rb这是个配置文件，主要指定sass源文件地址，以及编译后生成的css文件地址
+sass存放sass源文件
+stylesheets存放编译后生成的css
+已有工程的初始化
+
+对于已经创建好的工程，要想支持compass编译，只需要初始化一下就可以(切换到指定目录下)：
+
+ compass init
+编译
+
+完成sass的开发后，只需要运行下编译命令：
+
+compass compile
+compile支持多种模式的编译，详细信息可通过 compass compile -h 查看。
+
+每次编写sass完成后，都需要手动运行下编译命令，能不能自动编译呢？那当然是可以的，只需要对当前工程添加watch监视，如下：
+
+compass watch
+组件模块
+
+前面我们提到compass提供了便捷的组件模块，我们来一起看看有哪些常用的组件吧：
+
+reset 浏览器样式重置模块，减少不同浏览器间的差异性
+css3 css3命令模块
+layout 布局模块
+typography 版式模块
+utilities 工具类
+reset使用：
+
+@import "compass/reset";
+这样就会在css中生成重置样式了，不用我们再自己定义重置样式了。
+
+css3使用：
+
+@import "compass/css3";
+这是个绝对好用的特性，我们知道由于浏览器对css3支持的差异性，我们很多时候需要写一堆针对不同浏览器前缀样式，着实很烦人，css3命令模块帮我们解决了这个问题，我们只需include相应样式定义即可，compass会自动为我们生成针对不同浏览器的样式定义：
+
+　@import "compass/css3";
+　　.circle {
+　　　　@include border-radius(5px);
+　　}
+编译后：
+
+　　.circle {
+　　　　-moz-border-radius: 5px;
+　　　　-webkit-border-radius: 5px;
+　　　　-o-border-radius: 5px;
+　　　　-ms-border-radius: 5px;
+　　　　-khtml-border-radius: 5px;
+　　　　border-radius: 5px;
+　　}
+就写到这吧，其他特性慢慢探讨吧！
