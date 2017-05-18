@@ -1,0 +1,46 @@
+第一 gem install compass
+
+macserver1:~ admindyn$ gem install compass
+Fetching: sass-3.4.23.gem (100%)
+Successfully installed sass-3.4.23
+Fetching: multi_json-1.12.1.gem (100%)
+Successfully installed multi_json-1.12.1
+Fetching: compass-core-1.0.3.gem (100%)
+Successfully installed compass-core-1.0.3
+Fetching: compass-import-once-1.0.5.gem (100%)
+Successfully installed compass-import-once-1.0.5
+Fetching: chunky_png-1.3.8.gem (100%)
+Successfully installed chunky_png-1.3.8
+Fetching: rb-fsevent-0.9.8.gem (100%)
+Successfully installed rb-fsevent-0.9.8
+Fetching: ffi-1.9.18.gem (100%)
+Building native extensions.  This could take a while...
+Successfully installed ffi-1.9.18
+Fetching: rb-inotify-0.9.8.gem (100%)
+Successfully installed rb-inotify-0.9.8
+Fetching: compass-1.0.3.gem (100%)
+    Compass is charityware. If you love it, please donate on our behalf at http://umdf.org/compass Thanks!
+Successfully installed compass-1.0.3
+Parsing documentation for sass-3.4.23
+Installing ri documentation for sass-3.4.23
+Parsing documentation for multi_json-1.12.1
+Installing ri documentation for multi_json-1.12.1
+Parsing documentation for compass-core-1.0.3
+Installing ri documentation for compass-core-1.0.3
+Parsing documentation for compass-import-once-1.0.5
+Installing ri documentation for compass-import-once-1.0.5
+Parsing documentation for chunky_png-1.3.8
+Installing ri documentation for chunky_png-1.3.8
+Parsing documentation for rb-fsevent-0.9.8
+Installing ri documentation for rb-fsevent-0.9.8
+Parsing documentation for ffi-1.9.18
+Installing ri documentation for ffi-1.9.18
+Parsing documentation for rb-inotify-0.9.8
+Installing ri documentation for rb-inotify-0.9.8
+Parsing documentation for compass-1.0.3
+Installing ri documentation for compass-1.0.3
+Done installing documentation for sass, multi_json, compass-core, compass-import-once, chunky_png, rb-fsevent, ffi, rb-inotify, compass after 22 seconds
+9 gems installed
+macserver1:~ admindyn$ which compass
+/Users/admindyn/.rvm/gems/ruby-2.3.0/bin/compass
+macserver1:~ admindyn$ 
